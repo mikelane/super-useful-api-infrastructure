@@ -1,0 +1,378 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Api Gateway Infrastructure matches the previous snapshot 1`] = `
+Object {
+  "Outputs": Object {
+    "SuperUsefulApiEndpoint0347D2F3": Object {
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "SuperUsefulApi6475E2C6",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "SuperUsefulApiDeploymentStagedev8EA2E153",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+    "apiUrl": Object {
+      "Description": "The URL of the Super Useful Api",
+      "Export": Object {
+        "Name": "superUsefulApiUrl",
+      },
+      "Value": Object {
+        "Fn::Join": Array [
+          "",
+          Array [
+            "https://",
+            Object {
+              "Ref": "SuperUsefulApi6475E2C6",
+            },
+            ".execute-api.",
+            Object {
+              "Ref": "AWS::Region",
+            },
+            ".",
+            Object {
+              "Ref": "AWS::URLSuffix",
+            },
+            "/",
+            Object {
+              "Ref": "SuperUsefulApiDeploymentStagedev8EA2E153",
+            },
+            "/",
+          ],
+        ],
+      },
+    },
+  },
+  "Parameters": Object {
+    "BootstrapVersion": Object {
+      "Default": "/cdk-bootstrap/hnb659fds/version",
+      "Description": "Version of the CDK Bootstrap resources in this environment, automatically retrieved from SSM Parameter Store. [cdk:skip]",
+      "Type": "AWS::SSM::Parameter::Value<String>",
+    },
+  },
+  "Resources": Object {
+    "HelloHandler2E4FBA4D": Object {
+      "DependsOn": Array [
+        "HelloHandlerServiceRole11EF7C63",
+      ],
+      "Properties": Object {
+        "Code": Object {
+          "S3Bucket": Object {
+            "Fn::Sub": "cdk-hnb659fds-assets-\${AWS::AccountId}-\${AWS::Region}",
+          },
+          "S3Key": "596521ac4790e23580e71eef05dddf36985288332a243a7f8d3778d5fa45c1de.zip",
+        },
+        "Handler": "index.handler",
+        "Role": Object {
+          "Fn::GetAtt": Array [
+            "HelloHandlerServiceRole11EF7C63",
+            "Arn",
+          ],
+        },
+        "Runtime": "python3.9",
+      },
+      "Type": "AWS::Lambda::Function",
+    },
+    "HelloHandlerServiceRole11EF7C63": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "lambda.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AWSLambdaBasicExecutionRole",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "SuperUsefulApi6475E2C6": Object {
+      "Properties": Object {
+        "Name": "SuperUsefulApi",
+      },
+      "Type": "AWS::ApiGateway::RestApi",
+    },
+    "SuperUsefulApiAccountB88854D7": Object {
+      "DependsOn": Array [
+        "SuperUsefulApi6475E2C6",
+      ],
+      "Properties": Object {
+        "CloudWatchRoleArn": Object {
+          "Fn::GetAtt": Array [
+            "SuperUsefulApiCloudWatchRoleF02E51CB",
+            "Arn",
+          ],
+        },
+      },
+      "Type": "AWS::ApiGateway::Account",
+    },
+    "SuperUsefulApiCloudWatchRoleF02E51CB": Object {
+      "Properties": Object {
+        "AssumeRolePolicyDocument": Object {
+          "Statement": Array [
+            Object {
+              "Action": "sts:AssumeRole",
+              "Effect": "Allow",
+              "Principal": Object {
+                "Service": "apigateway.amazonaws.com",
+              },
+            },
+          ],
+          "Version": "2012-10-17",
+        },
+        "ManagedPolicyArns": Array [
+          Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":iam::aws:policy/service-role/AmazonAPIGatewayPushToCloudWatchLogs",
+              ],
+            ],
+          },
+        ],
+      },
+      "Type": "AWS::IAM::Role",
+    },
+    "SuperUsefulApiDeployment3C802403f6b61bbc4751e786c249a178fe6e135f": Object {
+      "DependsOn": Array [
+        "SuperUsefulApiv1helloGET6D52CB83",
+        "SuperUsefulApiv1helloB702085D",
+        "SuperUsefulApiv19275721D",
+      ],
+      "Properties": Object {
+        "Description": "Automatically created by the RestApi construct",
+        "RestApiId": Object {
+          "Ref": "SuperUsefulApi6475E2C6",
+        },
+      },
+      "Type": "AWS::ApiGateway::Deployment",
+    },
+    "SuperUsefulApiDeploymentStagedev8EA2E153": Object {
+      "DependsOn": Array [
+        "SuperUsefulApiAccountB88854D7",
+      ],
+      "Properties": Object {
+        "DeploymentId": Object {
+          "Ref": "SuperUsefulApiDeployment3C802403f6b61bbc4751e786c249a178fe6e135f",
+        },
+        "RestApiId": Object {
+          "Ref": "SuperUsefulApi6475E2C6",
+        },
+        "StageName": "dev",
+      },
+      "Type": "AWS::ApiGateway::Stage",
+    },
+    "SuperUsefulApiv19275721D": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Fn::GetAtt": Array [
+            "SuperUsefulApi6475E2C6",
+            "RootResourceId",
+          ],
+        },
+        "PathPart": "v1",
+        "RestApiId": Object {
+          "Ref": "SuperUsefulApi6475E2C6",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "SuperUsefulApiv1helloB702085D": Object {
+      "Properties": Object {
+        "ParentId": Object {
+          "Ref": "SuperUsefulApiv19275721D",
+        },
+        "PathPart": "hello",
+        "RestApiId": Object {
+          "Ref": "SuperUsefulApi6475E2C6",
+        },
+      },
+      "Type": "AWS::ApiGateway::Resource",
+    },
+    "SuperUsefulApiv1helloGET6D52CB83": Object {
+      "Properties": Object {
+        "AuthorizationType": "NONE",
+        "HttpMethod": "GET",
+        "Integration": Object {
+          "IntegrationHttpMethod": "POST",
+          "Type": "AWS_PROXY",
+          "Uri": Object {
+            "Fn::Join": Array [
+              "",
+              Array [
+                "arn:",
+                Object {
+                  "Ref": "AWS::Partition",
+                },
+                ":apigateway:",
+                Object {
+                  "Ref": "AWS::Region",
+                },
+                ":lambda:path/2015-03-31/functions/",
+                Object {
+                  "Fn::GetAtt": Array [
+                    "HelloHandler2E4FBA4D",
+                    "Arn",
+                  ],
+                },
+                "/invocations",
+              ],
+            ],
+          },
+        },
+        "ResourceId": Object {
+          "Ref": "SuperUsefulApiv1helloB702085D",
+        },
+        "RestApiId": Object {
+          "Ref": "SuperUsefulApi6475E2C6",
+        },
+      },
+      "Type": "AWS::ApiGateway::Method",
+    },
+    "SuperUsefulApiv1helloGETApiPermissionMyTestStackSuperUsefulApiC095EB08GETv1hello84381B39": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "HelloHandler2E4FBA4D",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "SuperUsefulApi6475E2C6",
+              },
+              "/",
+              Object {
+                "Ref": "SuperUsefulApiDeploymentStagedev8EA2E153",
+              },
+              "/GET/v1/hello",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+    "SuperUsefulApiv1helloGETApiPermissionTestMyTestStackSuperUsefulApiC095EB08GETv1hello8DB0BCAC": Object {
+      "Properties": Object {
+        "Action": "lambda:InvokeFunction",
+        "FunctionName": Object {
+          "Fn::GetAtt": Array [
+            "HelloHandler2E4FBA4D",
+            "Arn",
+          ],
+        },
+        "Principal": "apigateway.amazonaws.com",
+        "SourceArn": Object {
+          "Fn::Join": Array [
+            "",
+            Array [
+              "arn:",
+              Object {
+                "Ref": "AWS::Partition",
+              },
+              ":execute-api:",
+              Object {
+                "Ref": "AWS::Region",
+              },
+              ":",
+              Object {
+                "Ref": "AWS::AccountId",
+              },
+              ":",
+              Object {
+                "Ref": "SuperUsefulApi6475E2C6",
+              },
+              "/test-invoke-stage/GET/v1/hello",
+            ],
+          ],
+        },
+      },
+      "Type": "AWS::Lambda::Permission",
+    },
+  },
+  "Rules": Object {
+    "CheckBootstrapVersion": Object {
+      "Assertions": Array [
+        Object {
+          "Assert": Object {
+            "Fn::Not": Array [
+              Object {
+                "Fn::Contains": Array [
+                  Array [
+                    "1",
+                    "2",
+                    "3",
+                    "4",
+                    "5",
+                  ],
+                  Object {
+                    "Ref": "BootstrapVersion",
+                  },
+                ],
+              },
+            ],
+          },
+          "AssertDescription": "CDK bootstrap stack version 6 required. Please run 'cdk bootstrap' with a recent version of the CDK CLI.",
+        },
+      ],
+    },
+  },
+}
+`;
